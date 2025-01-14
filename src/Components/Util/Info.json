@@ -1,0 +1,599 @@
+{
+  "LastCollection1": [
+    {
+      "imgSrc": "frontend_assets/p_img1.png",
+      "altText": "Women Round Neck Cotton Top",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 45,
+      "id": 1
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img2.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 15,
+      "id": 2
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img3.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 45,
+      "id": 3
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img4.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 45,
+      "id": 4
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img5.png",
+      "altText": "Women Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Women Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 36,
+      "id": 5
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img6.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 56,
+      "id": 6
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img7.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers.",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 75,
+      "id": 7
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img8.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 65,
+      "id": 8
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img9.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top..",
+      "ClothePrice": 62,
+      "id": 9
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img10.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers.",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 72,
+      "id": 10
+
+    }
+  ],
+
+  "LastCollection2": [
+    {
+      "imgSrc": "frontend_assets/p_img11.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 22,
+      "id": 11
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img12.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 15,
+      "id": 12
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img13.png",
+      "altText": "Women Round Neck Cotton Top.",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 67,
+      "id": 13
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img14.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 44,
+      "id": 14
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img15.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 71,
+      "id": 15
+
+    }
+  ],
+
+  "CollectionData": [
+    {
+      "imgSrc": "frontend_assets/p_img1.png",
+      "altText": "Women Round Neck Cotton Top",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 45,
+      "Categorie": "women",
+      "id": 1
+    },
+    {
+      "imgSrc": "frontend_assets/p_img2.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 15,
+      "Categorie": "men",
+      "id": 2
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img3.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 43,
+      "Categorie": "kids",
+      "id": 3
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img4.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 45,
+      "Categorie": "men",
+      "id": 4
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img5.png",
+      "altText": "Women Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Women Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 45,
+      "Categorie": "women",
+      "id": 5
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img6.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 56,
+      "Categorie": "kids",
+      "id": 6
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img7.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers.",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 75,
+      "Categorie": "men",
+      "id": 7
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img8.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 65,
+      "Categorie": "men",
+      "id": 8
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img9.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 62,
+      "Categorie": "kids",
+      "id": 9
+
+    },
+
+    {
+      "imgSrc": "frontend_assets/p_img10.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers.",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 72,
+      "Categorie": "men",
+      "id": 10
+      
+    },
+    {
+      "imgSrc": "frontend_assets/p_img11.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 22,
+      "Categorie": "men",
+      "id": 11
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img12.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 15,
+      "Categorie": "men",
+      "id": 12
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img13.png",
+      "altText": "Women Round Neck Cotton Top.",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 67,
+      "Categorie": "women",
+      "id": 13
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img14.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 44,
+      "Categorie": "kids",
+      "id": 14
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img15.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 71,
+      "Categorie": "men",
+      "id": 15
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img16.png",
+      "altText": "Girls Round Neck Cotton Top",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 31,
+      "Categorie": "kids",
+      "id": 16
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img17.png",
+      "altText": "Men Tapered Fit Flat-Front Trousers.",
+      "ClotheName": "Men Tapered Fit Flat-Front Trousers.",
+      "ClothePrice": 15,
+      "Categorie": "men",
+      "id": 17
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img18.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 20,
+      "Categorie": "kids",
+      "id": 18
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img19.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 21,
+      "Categorie": "kids",
+      "id": 19
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img20.png",
+      "altText": "Women Palazzo Pants with Waist Belt.",
+      "ClotheName": "Women Palazzo Pants with Waist Belt.",
+      "ClothePrice": 61,
+      "Categorie": "women",
+      "id": 20
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img21.png",
+      "altText": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClotheName": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClothePrice": 81,
+      "Categorie": "women",
+      "id": 21
+
+      
+    },
+    {
+      "imgSrc": "frontend_assets/p_img22.png",
+      "altText": "Women Palazzo Pants with Waist Belt.",
+      "ClotheName": "Women Palazzo Pants with Waist Belt.",
+      "ClothePrice": 41,
+      "Categorie": "women",
+      "id": 22
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img23.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 41,
+      "Categorie": "kids",
+      "id": 23
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img24.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 51,
+      "Categorie": "kids",
+      "id": 24
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img25.png",
+      "altText": "Girls Round Neck Cotton Top",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 41,
+      "Categorie": "kids",
+      "id": 25
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img26.png",
+      "altText": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClotheName": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClothePrice": 58,
+      "Categorie": "women",
+      "id": 26
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img27.png",
+      "altText": "Girls Round Neck Cotton Top",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 11,
+      "Categorie": "kids",
+      "id": 27
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img28.png",
+      "altText": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClotheName": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClothePrice": 51,
+      "Categorie": "men",
+      "id": 28
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img29.png",
+      "altText": "Women Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Women Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 31,
+      "Categorie": "women",
+      "id": 29
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img30.png",
+      "altText": "Girls Round Neck Cotton Top",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 51,
+      "Categorie": "kids",
+      "id": 30
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img31.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 23,
+      "Categorie": "men",
+      "id": 31
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img32.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 32,
+      "Categorie": "men",
+      "id": 32
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img33.png",
+      "altText": "Girls Round Neck Cotton Top.",
+      "ClotheName": "Girls Round Neck Cotton Top.",
+      "ClothePrice": 21,
+      "Categorie": "kids",
+      "id": 33
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img34.png",
+      "altText": "Women Round Neck Cotton Top.",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 11,
+      "Categorie": "women",
+      "id": 34
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img35.png",
+      "altText": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClotheName": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClothePrice": 81,
+      "Categorie": "women",
+      "id": 35
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img36.png",
+      "altText": "Women Round Neck Cotton Top.",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 31,
+      "Categorie": "women",
+      "id": 36
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img37.png",
+      "altText": "Women Round Neck Cotton Top.",
+      "ClotheName": "Women Round Neck Cotton Top.",
+      "ClothePrice": 41,
+      "Categorie": "women",
+      "id": 37
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img38.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 41,
+      "Categorie": "kids",
+      "id": 38
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img39.png",
+      "altText": "Men Printed Plain Cotton Shirt.",
+      "ClotheName": "Men Printed Plain Cotton Shirt.",
+      "ClothePrice": 51,
+      "Categorie": "men",
+      "id": 39
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img40.png",
+      "altText": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClotheName": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClothePrice": 61,
+      "Categorie": "men",
+      "id": 40
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img41.png",
+      "altText": "Men Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Men Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 21,
+      "Categorie": "men",
+      "id": 41
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img42.png",
+      "altText": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClotheName": "Boy Round Neck Pure Cotton T-shirt.",
+      "ClothePrice": 21,
+      "Categorie": "kids",
+      "id": 42
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img43.png",
+      "altText": "Kid Tapered Slim Fit Trouser.",
+      "ClotheName": "Kid Tapered Slim Fit Trouser.",
+      "ClothePrice": 41,
+      "Categorie": "kids",
+      "id": 43
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img44.png",
+      "altText": "Women Zip-Front Relaxed Fit Jacket",
+      "ClotheName": "Women Zip-Front Relaxed Fit Jacket.",
+      "ClothePrice": 31,
+      "Categorie": "women",
+      "id": 44
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img45.png",
+      "altText": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClotheName": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClothePrice": 61,
+      "Categorie": "men",
+      "id": 45
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img46.png",
+      "altText": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClotheName": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClothePrice": 61,
+      "Categorie": "men",
+      "id": 46
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img47.png",
+      "altText": "Kid Tapered Slim Fit Trouser.",
+      "ClotheName": "Kid Tapered Slim Fit Trouser.",
+      "ClothePrice": 21,
+      "Categorie": "kids",
+      "id": 47
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img48.png",
+      "altText": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClotheName": "Men Slim Fit Relaxed Denim Jacket.",
+      "ClothePrice": 67,
+      "Categorie": "men",
+      "id": 48
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img49.png",
+      "altText": "Kid Tapered Slim Fit Trouser.",
+      "ClotheName": "Kid Tapered Slim Fit Trouser.",
+      "ClothePrice": 56,
+      "Categorie": "kids",
+      "id": 49
+
+
+    },
+    {
+      "imgSrc": "frontend_assets/p_img50.png",
+      "altText": "Kid Tapered Slim Fit Trouser.",
+      "ClotheName": "Kid Tapered Slim Fit Trouser",
+      "ClothePrice": 74,
+      "Categorie": "kids",
+      "id": 50
+
+
+    }
+  ]
+}
