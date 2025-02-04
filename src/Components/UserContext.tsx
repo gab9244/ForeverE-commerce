@@ -33,6 +33,8 @@ interface ItemIDType {
   id: number; 
   size: string ;
   uniqueKey: string;
+  quantityValue : number;
+
 }
 
 
@@ -53,6 +55,8 @@ interface UserContextType {
   quantities: QuantitiesContext[];
   setQuantities : React.Dispatch<React.SetStateAction<QuantitiesContext[]>>
 
+
+  
 }
 interface UserContextProviderProps {
     children: ReactNode;
@@ -65,7 +69,6 @@ export function UserContextProvider({children}: UserContextProviderProps) {
   const [userInfo,setUserInfo] = useState<UserInfoType>({ username: '', password: ''});
   const [ItemID, setItemID] = useState<ItemIDType[]>([]);
   const [clothes, setClothes] = useState<Clothe[]>(CollectionData);;
-  
   // Quantities state with initialization from localStorage
   const [quantities, setQuantities] = useState<QuantitiesContext[]>(() => {
     const storedQuantities = localStorage.getItem("cartQuantities");

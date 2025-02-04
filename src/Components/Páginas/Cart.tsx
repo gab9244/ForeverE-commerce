@@ -73,74 +73,54 @@ export const Cart = () => {
   useEffect(() => {
     ShowAllItens();
   }, [inputValue]);
-  // useEffect para monitorar mudanças no estado
+  // Vamos usar o useEffect para executar a função que faz a soma sempre que houver uma mudança em alguns estado que estão relacionados ao valor das roupas
+  // Vamos criar uma função para o usuário logado e não logado
   useEffect(() => {
-    const Soma = () => {
-      // Crie a array que receberá todos os itens presentes no carrinho
-      let AddToCart = [];
-      // Para os usuário logados
-      if (userInfo?.username) {
-        // Filtra os itens salvos pelo usuário logado
-        AddToCart = clothes.filter((data) =>
-          Items.some(
-            (item) => item.id === data.id && item.owner === userInfo.username
+    // Eu preciso criar uma função que pega o valor da propriedade clothePrice de cada roupa que deve a sua quantidade alterada, também preciso levar em conta que roupas com o mesmo id, mas tamanhos diferentes devem ser tratadas com roupas independentes
+    const offSum = () => {
+      // O primeiro problema que eu percebo é como pegar os itens que foram adicionados ao carrinho, o problema é que se eu usar o id para filtrar os itens e criar uma array com os preços, itens com o mesmo id, mas tamanhos diferentes não serão levados em conta.
+      // Tentar usar a uniqueKey para fazer a filtragem também resultará em erro, já que o valor da uniqueKey muda para ser igual a do ultimo item adicionado no carrinho, então o valor dos itens já adicionados não será levado em conta
+
+      // Primeiro vamos pegar todos os itens que estão no carrinho no momento
+      // pricesArray é uma array que é composta pelos itens que estão no carrinho no momento 
+      // Todos os itens que estiverem na array itemID complementaram a array pricesArray
+
+      // Não faz sentido eu usar a array clothes para pegar os itens do carrinho, já que não estou conseguindo usar propriedades que são adicionadas depois da criação da array
+      
+      // const pricesArray = clothes.filter((storedItem) =>
+      //   ItemID.some((offcloth) => offcloth.uniqueKey === storedItem.uniquekey)
+      // );
+      // Agora vamos criar uma array de objetos usando os itens que estão presentes no carrinho
+      const inTheCart = ItemID.map((items) => {
+        const clothePrice = clothes.find((item) => item.id === items.id)?.ClothePrice
+        // 1. Criaremos a variável matchingItem que pega apenas o item da array ItemID(Array essa que representa o carrinho do usuários não logados) que tiver o mesmo uniqueKey que o presente no contexto clothes
+        // const matchingItem = ItemID.find(
+        //   (prev) => prev.uniqueKey === items.uniquekey
+        // );
+        // Retornaremos um objeto por item da array, esse objetos é constituído pelo preço da roupa e a quantidade dela
+        return {
+          price: clothePrice ,
+          quantity: items.quantityValue ,
+        };
+      });
+      if (inTheCart.length > 0) {
+        // Agora inTheCart é uma array de objetos onde cada objeto representa o valor e a quantidade de uma determinada roupa
+        setTotal(
+         
+          inTheCart.reduce(
+          
+            (total, items) => total + items.price  * items.quantity,
+            0
           )
         );
       } else {
-        // Para usuários não logados, usa o contexto ItemID
-        // Aqui criamos uma array que possui apenas os itens já adicionados ao carrinho
-        AddToCart = clothes.filter((data) =>
-          ItemID.some((item) => item.id === data.id)
-        );
-      }
-
-    
-
-      // Agora vamos criar uma array de objetos que será constituída pelos itens que estão presentes no carrinho
-      // AddToCart é uma array constituída pelos item que estão no carrinho, ela pode mudar sua constituição baseado no usuário está logado ou não
-      const InTheCart = AddToCart.map((item) => {
-        // 1. Criaremos a variável matchingItem e lhe daremos como valor inicial null, fazemos isso, pois essa variável servira para guardar um objeto, mas como o objeto pode ser diferente baseado em alguns fatores lhe daremos valor null.
-        let matchingItem = null
-        //2. Caso o usuário esteja logado matchingItem terá como valor o item pego no banco de dados
-        if(userInfo.username){
-            matchingItem = Items.find(
-            (logado) => logado.id === item.id
-          );
-          // 3. Retornamos um objeto, que possui como propriedades o valor da roupa e a sua quantidade
-          return {
-            // A primeira propriedade é o valor do objeto que corresponde ao item adicionado ao carrinho
-            preço: item.ClothePrice,
-            // A segunda propriedade é a quantidade do item que achamos quando comparamos o id da quantidade com o id do item sem si
-            quantidade: matchingItem ?  matchingItem.quantity : 0, // Defina a quantidade
-          };
-        }
-        // 2. Caso o usuário não esteja logado definiremos como valor de matchingItem o item salvo pelo contexto quantities que é igual ao item que deve ser calculado no momento
-        else {
-           matchingItem = quantities.find(
-            (quantidade) => quantidade.id === item.id
-          );
-          // 3. Retornamos um objeto que é constituído pelo valor da roupa atual e a sua quantidade 
-          return {
-            preço: item.ClothePrice,
-            quantidade: matchingItem ?  matchingItem.quantityValue : 0, 
-          };
-        }
-      });
-
-      // Atualiza o estado total com a soma dos preços caso algum item tenha sido adicionado ao carrinho
-      if (InTheCart.length > 0) {
-        // Agora o estado total leva a quantidade do item em conta quando faz o calculo final
-        // Primeira usamos o método reduce na array com  itens que estão no carrinho, depois somamos o total mais o preço da roupa vezes a quantidade da roupa e com isso sempre que fizemos qualquer mudança no carrinho, ele tera seu valor total atualizado, mas agora também será capaz de levar a quantidade de cada roupa em conta quando estiver fazendo a soma.
-        // O item que sera usado para fazer a soma vareia baseado no usuário está logado ou não.
-        setTotal(InTheCart.reduce((total, item) => total + item.preço * item.quantidade, 0));
-      } else {
-        setTotal(0); // Define como zero se nenhum item for encontrado
-        setPlusFee(0); // Define como zero se nenhum item for encontrado
+        // É necessário fazer com que os valores dos estados seja 0 caso nenhum item esteja no carrinho, assim caso todos os itens sejam deletados o valor será zero e não igual ao valor do ultimo item deletado
+        setTotal(0);
+        setPlusFee(0);
       }
     };
-
-    Soma(); // Chama a função para calcular o total
-  }, [Items, clothes, ItemID, userInfo,quantities]); // Adiciona dependências relevantes
+    offSum();
+  }, [Items, ItemID, userInfo]); // Adiciona dependências relevantes
   // A função Soma é executada sempre que a array dos itens adicionados pelo usuário não logado for atualizada, assim com a array dos itens pegos no banco de dados, também quando o usuário logar e quando os itens no carrinho forem alterados
 
   // Aqui usamos o useEffect para atualizar o valor total mais os 10 da entrega, para que o valor seja atualizado corretamente colocamos o estado total como segundo parâmetro do hook
@@ -163,49 +143,70 @@ export const Cart = () => {
   useEffect(() => {
     localStorage.clear();
   });
-    // Esta função é usada para atualizar o valor da quantidade dos itens salvos no banco de dados pelo usuário logado
+  // Esta função é usada para atualizar o valor da quantidade dos itens salvos no banco de dados pelo usuário logado
   // updateQuantity é a função que usaremos para atualizar o valor do quantity, assim que o valor do input do elemento correspondente for alterado
   const updateQuantity = async (id: number, inputValue: string) => {
     try {
-       await fetch(
-        `http://localhost:3000/updateQuantity/${id}/${inputValue}`,
-        {
-          method: "PUT",
-          credentials: "include",
-        }
-      );
-      
+      await fetch(`http://localhost:3000/updateQuantity/${id}/${inputValue}`, {
+        method: "PUT",
+        credentials: "include",
+      });
     } catch (error) {
       console.log(error);
     }
     ShowAllItens();
   };
 
-
-  const updateQuantityLocally = (id: number, inputValue: number, size:string | undefined) => {
+  const updateQuantityLocally = (
+    id: number,
+    inputValue: number,
+    size: string | undefined,
+    newUniqueKey: string | undefined
+  ) => {
     // Eu quero criar um estado array de objetos, onde cada objeto possui duas propriedade id e quantityValue, eu quero ser capaz de mudar o valor de um desse objetos sempre que a função updateQuantityLocally for executada, para identificar o objeto que eu quero altera vou usar a propriedade id para verificar se o objeto que eu quero altera bate com o id do input que esta mudando seu valor, já que a função seria executado sempre que algum input fosse alterado. Também quero usar a propriedade quantityValue para mostrar o valor de cada objeto/ do input
-    setQuantities((prevQuantities) => {
-      // Verifique se o id do item já existe no estado
-      const itemExists = prevQuantities.some((item) => item.id === id);
-      console.log(itemExists)
-      if (itemExists) {
-        //Se o item existir atualize o seu valor do quantityValue
-        return prevQuantities.map((item) =>
-          item.id === id
+    // setQuantities((prevQuantities) => {
+    //   // A função deve achar o item que deve a propriedade alterada e atualiza-la
+    //   // const newUniqueKey = `${id}${size}`
+    //   // Verifique se o id do item já existe no estado
+    //   // O problema está nessa linha, por algum motivo não estou conseguindo acessar a propriedade uniqueKey
+    //   const itemExists = prevQuantities.find((item) =>`3M` === newUniqueKey);
+    //   console.log(newUniqueKey);
+    //   if (itemExists) {
+    //     console.log("working")
+    //     //Se o item existir atualize o seu valor do quantityValue
+    //     return prevQuantities.map((item) =>
+    //       item.id === id
+    //         ? { ...item, quantityValue: inputValue } // Atualiza o valor do quantity
+    //         : item
+    //     );
+    //   }
+    //   return prevQuantities
+    //   // else {
+    //   //   // Adicione um novo item ao estado não faz sentido com o código, já que o único objeto da função é atualizar a propriedade do item alterado
+    //   //   return [...prevQuantities, { id, quantityValue: inputValue }];
+    //   // }
+    // });
+    setItemID((prev) => {
+      const itemExistes = prev.find((item) => item.uniqueKey === newUniqueKey);
+      if (itemExistes) {
+        return prev.map((item) =>
+          item.uniqueKey === newUniqueKey
             ? { ...item, quantityValue: inputValue } // Atualiza o valor do quantity
             : item
         );
       } else {
-        // Adicione um novo item ao estado
-        return [...prevQuantities, { id, quantityValue: inputValue}];
+        return prev;
       }
     });
   };
 
-
   // A função DeleteItem é usada para deletar uma das roupas clicadas
   // Ela recebe o id da roupa como parâmetro e faz uma simples solicitação de delete, onde passa o id da roupa na url, dessa forma podemos pegar o id da roupa pelos params no backend da solicitação, e com isso podemos deletar o item baseado no sei id, por fim caso consigamos deletar a roupa, atualizamos o estado da lista removendo a roupa deletada
-  const DeleteItem = async (ItemId: number, uniqueKey: string | undefined , Size: string | undefined ) => {
+  const DeleteItem = async (
+    ItemId: number,
+    uniqueKey: string | undefined,
+    Size: string | undefined
+  ) => {
     if (userInfo.username !== "") {
       try {
         const response = await fetch(`http://localhost:3000/delete/${ItemId}`, {
@@ -232,16 +233,21 @@ export const Cart = () => {
     // 1. Recuperar a array atual do localStorage
     // 2. Filtrar a array para excluir o objeto com o id correspondente
     // 3. Atualizar o estado no React e sobrescrever a array no localStorage
-    if (!userInfo.username) {  
+    if (!userInfo.username) {
+      // if (!uniqueKey) {
+      //   console.log("notWorking", uniqueKey);
+      //   return;
+      // }
       // Para deletar itens vou usar a uniqueKey ao invés de id e o tamanho da roupa
       setItemID((prev) => {
-        return prev.filter((item) =>(`${item.id}${Size}` !== uniqueKey));
+        // O problema não está nas propriedades do ItemID
+        return prev.filter((item) => item.uniqueKey !== uniqueKey);
       });
 
-          // Limpa o valor da quantidade dos itens salvos pelo usuário não logado, usamos a propriedade uniqueKey para não deletar a quantidade de outros itens com o mesmo id, mas tamanhos diferentes
-    setQuantities((prev) => {
-      return prev.filter((item) =>(item.id !== ItemId));
-    });
+      // Limpa o valor da quantidade dos itens salvos pelo usuário não logado, usamos a propriedade uniqueKey para não deletar a quantidade de outros itens com o mesmo id, mas tamanhos diferentes
+      setQuantities((prev) => {
+        return prev.filter((item) => item.uniquekey !== uniqueKey);
+      });
 
       // LocalStorage
       // 1. Recuperar a array atual do localStorage
@@ -269,8 +275,8 @@ export const Cart = () => {
         <div>
           {/* Para mostrar apenas as roupas dos usuários logados usamos o estado Items(que possui todos os dados dos itens salvos pelo usuário no banco de dado), perguntamos se algum objeto dentro do contexto Items possui id igual ao dos objetos locais e também perguntamos se o usuário que salvou a roupa é o mesmo que esta logado, se sim renderizamos os itens salvos pelo user no mongodb */}
 
-          {clothes.map((data, index) =>
-            userInfo.username 
+          {/* {clothes.map((data, index) =>
+            userInfo.username
               ? Items.map(
                   (item) =>
                     item.id === data.id && (
@@ -284,21 +290,26 @@ export const Cart = () => {
                       />
                     )
                 )
-                // Para renderizar os itens no carrinho do usuário não
-              : ItemID.map((item, position) =>
-                  item.id === data.id &&
-                  ItemID.find(
-                    (item) =>
-                       item.id === data.id
-                  ) ? (
-                    <LocalItemComponent
-                      key={position}
-                      data={data}
-                      updateQuantityLocally={updateQuantityLocally}
-                      DeleteItem={DeleteItem}
-                    />
-                  ) : null
-                )
+              : // Para renderizar os itens no carrinho do usuário não logado usamos o contexto ItemID que é uma outra array de objetos 
+              // Eu quero renderizar item da array de objetos principal usando a array ItemID para fazer a verificação do adicionamento do item ao carrinho
+                
+                  // Para renderizar os itens usando o contexto/array ItemID eu preciso primeiramente fazer a verificação via id, já que o contexto que estamos usando para renderizar todos os item do carrinho não pode criar outros itens, então ele não pode ter mais de um elemento com o mesmo id
+
+                   
+                
+          )} */}
+          {userInfo.username ? (
+            <SavedItemComponent
+              updateQuantity={updateQuantity}
+              setinputValue={setinputValue}
+              Items={Items}
+              DeleteItem={DeleteItem}
+            />
+          ) : (
+            <LocalItemComponent
+              updateQuantityLocally={updateQuantityLocally}
+              DeleteItem={DeleteItem}
+            />
           )}
         </div>
       </div>
@@ -332,3 +343,103 @@ export const Cart = () => {
     </div>
   );
 };
+
+// {clothes.map((data, index) =>
+//           userInfo.username
+//             ? Items.map(
+//                 (item) =>
+//                   item.id === data.id && (
+//                     <SavedItemComponent
+//                       updateQuantity={updateQuantity}
+//                       setinputValue={setinputValue}
+//                       data={data}
+//                       Items={Items}
+//                       DeleteItem={DeleteItem}
+//                       key={index}
+//                     />
+//                   )
+//               )
+//             : // Para renderizar os itens no carrinho do usuário não logado usamos o contexto ItemID que é uma outra array de objetos
+//             // Eu quero renderizar item da array de objetos principal usando a array ItemID para fazer a verificação do adicionamento do item ao carrinho
+//               ItemID.map((item, position) =>
+
+//                 // Para renderizar os itens usando o contexto/array ItemID eu preciso primeiramente fazer a verificação via id, já que o contexto que estamos usando para renderizar todos os item do carrinho não pode criar outros itens, então ele não pode ter mais de um elemento com o mesmo id
+//                 item.id === data.id &&
+//                 ItemID.find((item) => item.uniqueKey=== data.uniquekey) ? (
+//                   <LocalItemComponent
+//                     key={position}
+//                     data={data}
+//                     updateQuantityLocally={updateQuantityLocally}
+//                     DeleteItem={DeleteItem}
+//                   />
+//                 ) : null
+//               )
+//         )}
+
+// const Soma = () => {
+//   // Crie a array que receberá todos os itens presentes no carrinho
+//   let AddToCart = [];
+//   // Para os usuário logados
+//   if (userInfo?.username) {
+//     // Filtra os itens salvos pelo usuário logado
+//     AddToCart = clothes.filter((data) =>
+//       Items.some(
+//         (item) => item.id === data.id && item.owner === userInfo.username
+//       )
+//     );
+//   } else {
+//     // Para usuários não logados, usa o contexto ItemID
+//     // Aqui criamos uma array que possui apenas os itens já adicionados ao carrinho
+//     AddToCart =
+//     clothes.filter((data) =>
+//       ItemID.some((item) => item.uniqueKey === `${data.id}${data.ClothSize}`)
+//     );
+//   }
+
+//   // Agora vamos criar uma array de objetos que será constituída pelos itens que estão presentes no carrinho
+//   // AddToCart é uma array constituída pelos item que estão no carrinho, ela pode mudar sua constituição baseado no usuário está logado ou não
+//   const InTheCart = AddToCart.map((item) => {
+//     // 1. Criaremos a variável matchingItem e lhe daremos como valor inicial null, fazemos isso, pois essa variável servira para guardar um objeto, mas como o objeto pode ser diferente baseado em alguns fatores lhe daremos valor null.
+//     let matchingItem = null;
+//     //2. Caso o usuário esteja logado matchingItem terá como valor o item pego no banco de dados
+//     if (userInfo.username) {
+//       matchingItem = Items.find((logado) => logado.id === item.id);
+//       // 3. Retornamos um objeto, que possui como propriedades o valor da roupa e a sua quantidade
+//       return {
+//         // A primeira propriedade é o valor do objeto que corresponde ao item adicionado ao carrinho
+//         preço: item.ClothePrice,
+//         // A segunda propriedade é a quantidade do item que achamos quando comparamos o id da quantidade com o id do item sem si
+//         quantidade: matchingItem ? matchingItem.quantity : 0, // Defina a quantidade
+//       };
+//     }
+//     // 2. Caso o usuário não esteja logado definiremos como valor de matchingItem o item salvo pelo contexto quantities que é igual ao item que deve ser calculado no momento
+//     else {
+//       matchingItem = ItemID.find(
+//         (prev) => prev.uniqueKey === item.uniquekey
+//       );
+//       // 3. Retornamos um objeto que é constituído pelo valor da roupa atual e a sua quantidade
+//       return {
+//         preço: item.ClothePrice,
+//         quantidade: matchingItem ? matchingItem.quantityValue : 0,
+//       };
+//     }
+//   });
+
+//   // Atualiza o estado total com a soma dos preços caso algum item tenha sido adicionado ao carrinho
+//   if (InTheCart.length > 0) {
+//     // Agora o estado total leva a quantidade do item em conta quando faz o calculo final
+//     // Primeira usamos o método reduce na array com  itens que estão no carrinho, depois somamos o total mais o preço da roupa vezes a quantidade da roupa e com isso sempre que fizemos qualquer mudança no carrinho, ele tera seu valor total atualizado, mas agora também será capaz de levar a quantidade de cada roupa em conta quando estiver fazendo a soma.
+//     // O item que sera usado para fazer a soma vareia baseado no usuário está logado ou não.
+//     setTotal(
+//       InTheCart.reduce(
+//         (total, item) => total + item.preço * item.quantidade,
+//         0
+//       )
+//     );
+//   } else {
+//     setTotal(0); // Define como zero se nenhum item for encontrado
+//     setPlusFee(0); // Define como zero se nenhum item for encontrado
+//   }
+// };
+
+// Soma(); // Chama a função para calcular o total
