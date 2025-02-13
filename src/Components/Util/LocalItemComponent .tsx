@@ -16,8 +16,8 @@ export const LocalItemComponent = ({
   const { ItemID } = useContext(UserContext);
   const {clothes} = useContext(UserContext)
   return (
-
-     ItemID.map( (data,index) => 
+    // Para renderizar o carrinho do usuário não logado eu usei o contexto ItemID que é uma array de objetos que representa o carrinho do usuário não logado
+     ItemID.map((data,index) => 
       clothes.find((item) => item.id === data.id) &&
       <div className="flex border-t-2 border-b-2 p-4 gap-3" key={index}>
       <img src={clothes.find((item) => item.id === data.id)?.imgSrc} alt="" className="w-1/4 md:w-1/12" />

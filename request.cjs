@@ -105,29 +105,32 @@ app.post("/LogIng", async (req, res) => {
     res.status(404).json(error); //Se houver um erro o retorne como json
   }
 });
-//Temos que usar upload.none() para que possamos mandar varios dados ao banco de dados e também o usamos, pois a nossa solicitação apenas contêm texto e nenhum arquivo
 
-//upload.none() passa os campos de dados na solicitação e os torna disponiveis no req.body
-//upload.none() é uma middleware usada para lidar com solicitações que apenas possuem texto de formularios enviados via FormData do frontend
+//Temos que usar upload.none() para que possamos mandar vários dados ao banco de dados e também o usamos, pois a nossa solicitação apenas contêm texto e nenhum arquivo
+
+//upload.none() passa os campos de dados na solicitação e os torna disponíveis no req.body
+//upload.none() é uma middleware usada para lidar com solicitações que apenas possuem texto de formulários enviados via FormData do frontend
 app.post("/addItem", async (req, res) => {
+  
+  const { id, owner, size, quantity,uniqueKey } = req.body;
   console.log("Corpo da requisição:", req.body); // Para verificar o que está chegando
-  const { id, owner, size, quantity } = req.body;
-
   try {
     // Para aumentar a quantidade de um itens já salvo no mongodb, precisamos primeiramente saber se o itens existe e se ele existir incrementaremos o valor da propriedade quantity do elemento e assim adicionamos mais um do mesmo elemento ao banco de dados
-    const existingItem = await OrderModel.findOne({ id, size, owner });
+    // Esta primeira parte serve para atualizar o valor de uma roupa, guardando o novo valor no banco de dados
+    const existingItem = await OrderModel.findOne({  owner,uniqueKey });
     if (existingItem) {
       await OrderModel.updateOne(
-        { id, size, owner },
+        { owner,uniqueKey },
         { $inc: { quantity: 1 } }
       );
       res.status(200).json({ message: "Quantidade incrementada com sucesso!" });
     } else {
-      const itemDoc = await OrderModel.create({ id, owner, size, quantity });
+      // Aqui é onde criamos um novo item
+      // Não vamos mais mandar o id para o banco de dados já que ele faz com que um erro aconteça caso o id e o owner sejam o mesmo
+      const itemDoc = await OrderModel.create({ id, owner, size, quantity, uniqueKey});
       res.status(200).json(itemDoc);
     }
   } catch (error) {
-    console.error("Erro ao adicionar item:", error.message);
     res
       .status(400)
       .json({ error: "Erro ao adicionar item", details: error.message });
@@ -135,19 +138,15 @@ app.post("/addItem", async (req, res) => {
 });
 
 app.put("/updateQuantity/:id/:inputValue", async (req, res) => {
-  const { id, inputValue } = req.params;
+  const { id, inputValue,uniqueKey } = req.params;
   try {
     // Vamos usar o método findOneAndUpdate para atualizar o item que queremos atualizar e também vamos usar ele, já que queremos que a variavel que usamos para executar o método tenha como valor o item que acabou de ser atualizado
     // O método findOneAndUpdate basicamente faz dois papeis em um, ele busca o item e se o encontrar  0 atualiza,
     const findItem = await OrderModel.findOneAndUpdate(
-      { id },
+      { uniqueKey },
       { quantity: inputValue },
       { new: true }
     );
-    //   if(findItem){
-    //   const UpdateOneQ = await OrderModel.updateOne({quantity: inputValue})
-
-    // }
 
     // res.status(200).json({id:id, quantity: findItem.quantity});
     res.status(200).json(findItem.quantity)
@@ -165,7 +164,7 @@ app.put("/updateQuantity/:id/:inputValue", async (req, res) => {
 // Mostre todos os itens em uma coleção
 app.get("/getAllItems", async (req, res) => {
   try {
-    // Busca todos os documentos na coleção
+    // Busca todos os documentos na coleção por apenas chamar o método find no modelo OrderModel 
     const allItems = await OrderModel.find();
     res.status(200).json(allItems);
   } catch (error) {
@@ -176,11 +175,15 @@ app.get("/getAllItems", async (req, res) => {
   }
 });
 
+// Esta é a solicitação de delete do projeto 
 app.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
+  // Primeiro pegamos a uniqueKey da roupa
+  const { uniqueKey } = req.params;
 
   try {
-    const DeleteOne = await OrderModel.findOne({ id }).deleteOne();
+    // Em segui usamos a uniqueKey para deletar o item
+    const DeleteOne = await OrderModel.findOne({ uniqueKey }).deleteOne();
+    // Depois de ter deletado o item retornamos ele 
     res.status(200).json(DeleteOne);
   } catch (error) {
     console.log(

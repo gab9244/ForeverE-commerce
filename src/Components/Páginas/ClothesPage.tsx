@@ -24,25 +24,31 @@ export const Clothes = ({
 }: Clothe) => {
   const [Size, setSize] = useState("");
   const { ItemID,setItemID } = useContext(UserContext);
-  const {setClothes } = useContext(UserContext);
+  // const {setClothes } = useContext(UserContext);
   const { userInfo } = useContext(UserContext);
   const { setQuantities } = useContext(UserContext);
 
   // Criar estado inicial com a nova propriedade
 
+  // 
   const AddingItem = async () => {
+     const newUniqueKey = `${id}${Size}`
+    // Primeiro perguntamos se o usuário escolheu um tamanho de roupa, caso ele tenha feito isso o código continua
     if (Size === "") {
       return alert("Please insert a size");
     }
+    //Em seguida perguntamos se ele está logado se estiver o código dentro do bloco if é executado
     if (userInfo.username) {
-      // Solicitação que adiciona o id do item ao banco de dados
+      // Solicitação que adiciona o uniqueKey e outras informações do item ao banco de dados
       await fetch("http://localhost:3000/addItem", {
         method: "POST",
+        // No corpo da solicitação colocamos o id do item, dono, tamanho, quantidade e a uniqueKey do item
         body: JSON.stringify({
           id,
           owner: userInfo?.username,
           size: Size,
           quantity: 1,
+          uniqueKey: newUniqueKey,
         }),
         credentials: "include",
         headers: { "Content-Type": "application/json" },

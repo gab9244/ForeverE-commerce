@@ -54,11 +54,13 @@ export const Cart = () => {
               owner: string;
               size: string;
               quantity: number;
+              uniqueKey: string;
             }) => ({
               id: item.id,
               owner: item.owner,
               size: item.size || "M",
               quantity: item.quantity,
+              uniqueKey: item.uniqueKey ,
             })
           );
         setItems(ids); // Atualiza o estado com os IDs
@@ -73,43 +75,28 @@ export const Cart = () => {
   useEffect(() => {
     ShowAllItens();
   }, [inputValue]);
-  // Vamos usar o useEffect para executar a função que faz a soma sempre que houver uma mudança em alguns estado que estão relacionados ao valor das roupas
-  // Vamos criar uma função para o usuário logado e não logado
+  // Vamos usar o useEffect para executar a função que faz a soma sempre que houver uma mudança em alguns estados que estão relacionados ao valor das roupas
+  // Vamos criar uma função que mostra a soma para o usuário logado e não logado
   useEffect(() => {
-    // Eu preciso criar uma função que pega o valor da propriedade clothePrice de cada roupa que deve a sua quantidade alterada, também preciso levar em conta que roupas com o mesmo id, mas tamanhos diferentes devem ser tratadas com roupas independentes
     const offSum = () => {
-      // O primeiro problema que eu percebo é como pegar os itens que foram adicionados ao carrinho, o problema é que se eu usar o id para filtrar os itens e criar uma array com os preços, itens com o mesmo id, mas tamanhos diferentes não serão levados em conta.
-      // Tentar usar a uniqueKey para fazer a filtragem também resultará em erro, já que o valor da uniqueKey muda para ser igual a do ultimo item adicionado no carrinho, então o valor dos itens já adicionados não será levado em conta
-
-      // Primeiro vamos pegar todos os itens que estão no carrinho no momento
-      // pricesArray é uma array que é composta pelos itens que estão no carrinho no momento 
-      // Todos os itens que estiverem na array itemID complementaram a array pricesArray
-
-      // Não faz sentido eu usar a array clothes para pegar os itens do carrinho, já que não estou conseguindo usar propriedades que são adicionadas depois da criação da array
-      
-      // const pricesArray = clothes.filter((storedItem) =>
-      //   ItemID.some((offcloth) => offcloth.uniqueKey === storedItem.uniquekey)
-      // );
-      // Agora vamos criar uma array de objetos usando os itens que estão presentes no carrinho
+      // Primeiro, vamos usar a função  que representa o carrinho do usuário não logado para criar uma array de objetos onde cada objeto é composto pelo preço da roupa e a sua quantidade
       const inTheCart = ItemID.map((items) => {
-        const clothePrice = clothes.find((item) => item.id === items.id)?.ClothePrice
-        // 1. Criaremos a variável matchingItem que pega apenas o item da array ItemID(Array essa que representa o carrinho do usuários não logados) que tiver o mesmo uniqueKey que o presente no contexto clothes
-        // const matchingItem = ItemID.find(
-        //   (prev) => prev.uniqueKey === items.uniquekey
-        // );
-        // Retornaremos um objeto por item da array, esse objetos é constituído pelo preço da roupa e a quantidade dela
+        // Usei o operador de coalescência nula (?? + valor) para fazer com que caso o valor de clothesPrice não fosse encontrado ao invés da propriedade price ter seu valor como indefinido seu valor seria 0.
+        // clothePrice nada mais é do que o preço da roupa, para achar a roupa buscamos seu valor no contexto clothes onde todos os dados das roupas foram guardados, para achar usei o método find no contexto onde pegamos o item baseado no id ser igual ao id do elemento que está no carrinho
+        const clothePrice =
+          clothes.find((item) => item.id === items.id)?.ClothePrice ?? 0;
+        // O corpo de cada objeto representa um item no carrinho, cada corpo é composto pelo preço da roupa e a sua quantidade
         return {
-          price: clothePrice ,
-          quantity: items.quantityValue ,
+          price: clothePrice,
+          quantity: items.quantityValue,
         };
       });
+      // Verificamos se existe algum item no carrinho caso exista colocamos a soma das roupas dentro do estado Total, para que possamos mostrar o resultado do valor total
       if (inTheCart.length > 0) {
-        // Agora inTheCart é uma array de objetos onde cada objeto representa o valor e a quantidade de uma determinada roupa
         setTotal(
-         
+          // Para pegamos a soma usamos o método reduce na array inTheCart, na função somamos valor total mais o preço da roupa vezes a sua quantidade
           inTheCart.reduce(
-          
-            (total, items) => total + items.price  * items.quantity,
+            (total, items) => total + items.price * items.quantity,
             0
           )
         );
@@ -121,7 +108,6 @@ export const Cart = () => {
     };
     offSum();
   }, [Items, ItemID, userInfo]); // Adiciona dependências relevantes
-  // A função Soma é executada sempre que a array dos itens adicionados pelo usuário não logado for atualizada, assim com a array dos itens pegos no banco de dados, também quando o usuário logar e quando os itens no carrinho forem alterados
 
   // Aqui usamos o useEffect para atualizar o valor total mais os 10 da entrega, para que o valor seja atualizado corretamente colocamos o estado total como segundo parâmetro do hook
   useEffect(() => {
@@ -209,7 +195,7 @@ export const Cart = () => {
   ) => {
     if (userInfo.username !== "") {
       try {
-        const response = await fetch(`http://localhost:3000/delete/${ItemId}`, {
+        const response = await fetch(`http://localhost:3000/delete/${uniqueKey}`, {
           method: "DELETE",
           credentials: "include",
         });
