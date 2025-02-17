@@ -3,7 +3,7 @@ import { UserContext } from "../UserContext";
 
 type SavedItemComponentPromps = {
   Items: { id: number; owner: string; size: string; quantity: number }[];
-  updateQuantity: (id: number, inputValue: string) => void;
+  updateQuantity: (uniqueKey: string, inputValue: string) => void;
   setinputValue: (value: number) => void;
   DeleteItem: (id: number, uniqueKey: string, size?: string) => void;
 };
@@ -15,12 +15,11 @@ export const SavedItemComponent = ({
   DeleteItem,
 }: SavedItemComponentPromps) => {
   // Contexto que compartilhar as informações do usuário entre os componentes
-  const { userInfo } = useContext(UserContext);
   const { clothes } = useContext(UserContext);
   return Items.map(
     (data, index) =>
       clothes.find((item) => item.id === data.id) && (
-        <div className="flex border-t-2 border-b-2 p-4 gap-3" key = {index}>
+        <div className="flex border-t-2 border-b-2 p-4 gap-3" key={index}>
           <img
             src={clothes.find((item) => item.id === data.id)?.imgSrc}
             alt=""
@@ -36,9 +35,7 @@ export const SavedItemComponent = ({
                   ${clothes.find((item) => item.id === data.id)?.ClothePrice}
                 </p>
                 <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
-                  {
-                    data.size
-                  }
+                  {data.size}
                 </p>
               </div>
               <div className="flex gap-5">
@@ -47,12 +44,13 @@ export const SavedItemComponent = ({
                   className="w-10 border-2"
                   // Para fazer com que valores negativos não possam ser adicionados pelas setas
                   min={1}
-                  value={
-                  data.quantity
-                  }
+                  value={data.quantity}
                   // O valor do input
                   onChange={(inputValue) => {
-                    updateQuantity(data.id, inputValue.target.value);
+                    updateQuantity(
+                      `${data.id}${data.size}`,
+                      inputValue.target.value
+                    );
                     setinputValue(Number(inputValue.target.value));
                   }}
                   // Para fazer com que o usuário não seja capaz de adicionar valores negativos ao input usaremos o evento onKeyDown
@@ -64,34 +62,16 @@ export const SavedItemComponent = ({
                     }
                   }}
                 />
-                <p>
-                  {
-                    Items.find(
-                      (item) =>
-                        item.id === data.id && item.owner === userInfo.username
-                    )?.quantity
-                  }
-                </p>
+                <p>{data.quantity}</p>
                 <button
                   className="w-5"
                   onClick={() =>
                     DeleteItem(
                       data.id,
 
-                      `${data.id}${
-                        (data.id,
-                        Items.find(
-                          (item) =>
-                            item.id === data.id &&
-                            item.owner === userInfo.username
-                        )?.size)
-                      }`,
+                      `${data.id}${data.size}`,
 
-                      Items.find(
-                        (item) =>
-                          item.id === data.id &&
-                          item.owner === userInfo.username
-                      )?.size
+                      data.size
                     )
                   }
                 >

@@ -137,8 +137,8 @@ app.post("/addItem", async (req, res) => {
   }
 });
 
-app.put("/updateQuantity/:id/:inputValue", async (req, res) => {
-  const { id, inputValue,uniqueKey } = req.params;
+app.put("/updateQuantity/:uniqueKey/:inputValue", async (req, res) => {
+  const { uniqueKey, inputValue } = req.params;
   try {
     // Vamos usar o método findOneAndUpdate para atualizar o item que queremos atualizar e também vamos usar ele, já que queremos que a variavel que usamos para executar o método tenha como valor o item que acabou de ser atualizado
     // O método findOneAndUpdate basicamente faz dois papeis em um, ele busca o item e se o encontrar  0 atualiza,
@@ -176,14 +176,16 @@ app.get("/getAllItems", async (req, res) => {
 });
 
 // Esta é a solicitação de delete do projeto 
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/delete/:uniqueKey", async (req, res) => {
   // Primeiro pegamos a uniqueKey da roupa
   const { uniqueKey } = req.params;
+  console.log(uniqueKey)
 
   try {
     // Em segui usamos a uniqueKey para deletar o item
     const DeleteOne = await OrderModel.findOne({ uniqueKey }).deleteOne();
     // Depois de ter deletado o item retornamos ele 
+    
     res.status(200).json(DeleteOne);
   } catch (error) {
     console.log(
