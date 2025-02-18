@@ -16,11 +16,14 @@ export const SavedItemComponent = ({
 }: SavedItemComponentPromps) => {
   // Contexto que compartilhar as informações do usuário entre os componentes
   const { clothes } = useContext(UserContext);
+  // Para fazer o carrinho do usuário não logado usei uma array Items que representa o carrinho, usando map na array criei um item por objeto na array
   return Items.map(
     (data, index) =>
+      // Para mostrar os itens eu fiz uma comparação com a array de dados(clothes é o contexto que possui todos os dados de cada roupa)
       clothes.find((item) => item.id === data.id) && (
         <div className="flex border-t-2 border-b-2 p-4 gap-3" key={index}>
           <img
+            // Para pegar o src de cada roupa procuramos no clothes usando a propriedade id tanto da array que representa o carrinho quanto da array com os dados da roupa
             src={clothes.find((item) => item.id === data.id)?.imgSrc}
             alt=""
             className="w-1/4 md:w-1/12"
@@ -35,6 +38,7 @@ export const SavedItemComponent = ({
                   ${clothes.find((item) => item.id === data.id)?.ClothePrice}
                 </p>
                 <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
+                  {/* Para renderizar dados dinâmicos como o tamanho da roupa preferi colocar-los dentro da array Items, já que não foi possível colocar essas propriedades dentro de clothes*/}
                   {data.size}
                 </p>
               </div>
@@ -45,7 +49,7 @@ export const SavedItemComponent = ({
                   // Para fazer com que valores negativos não possam ser adicionados pelas setas
                   min={1}
                   value={data.quantity}
-                  // O valor do input
+                  // Sempre que o valor dos inputs for mudado executaremos a funções updateQuantity passando o valor da uniqueKey da roupa assim como o valor do input e também vamos alterar o valor do estado InputValue, estado esse que representa o valor do input
                   onChange={(inputValue) => {
                     updateQuantity(
                       `${data.id}${data.size}`,
@@ -66,11 +70,10 @@ export const SavedItemComponent = ({
                 <button
                   className="w-5"
                   onClick={() =>
+                    // Além de executamos a função que deleta o item assim que o botão de delete for apertado, também passamos 
                     DeleteItem(
                       data.id,
-
                       `${data.id}${data.size}`,
-
                       data.size
                     )
                   }

@@ -23,16 +23,15 @@ export const Clothes = ({
   id,
 }: Clothe) => {
   const [Size, setSize] = useState("");
-  const { ItemID,setItemID } = useContext(UserContext);
+  const { ItemID, setItemID } = useContext(UserContext);
   // const {setClothes } = useContext(UserContext);
   const { userInfo } = useContext(UserContext);
   const { setQuantities } = useContext(UserContext);
 
   // Criar estado inicial com a nova propriedade
 
-  // 
   const AddingItem = async () => {
-     const newUniqueKey = `${id}${Size}`
+    const newUniqueKey = `${id}${Size}`;
     // Primeiro perguntamos se o usuário escolheu um tamanho de roupa, caso ele tenha feito isso o código continua
     if (Size === "") {
       return alert("Please insert a size");
@@ -65,57 +64,40 @@ export const Clothes = ({
         })
         .catch((error) => alert(`Falha ao criar item: ${error.message}`));
       // Se o dono do item for o mesmo que o usuário logado, adicionaremos a propriedade owner e passaremos como valor o username que estiver logado
+      return
+    } else{
+      // Fazer a solicitação de update do valor de quantity no caso do usuário querer adicionar o mesmo elemento ao banco de dados
+      // Antes de adicionar item ao carrinho do usuário não logado é necessário fazer algumas verificações, como só adicionar itens iguais caso o tamanho seja diferente do já adicionado e caso o item já tenha sido adicionado e tentamos adicionar o do mesmo tamanho que apenas incrementemos a quantidade em 1.
+      // Para lidar com o adicionamento de itens de tamanhos iguais usaremos uma propriedade chamada de uniqueKey que junta tanto o id da roupa como seu tamanho para gerar uma propriedade com valor único
+      setItemID((prev) => {
+        // 1. Vamos criar a variável que vai recebe a uniqueKey que será usada para dar valor único para a propriedade uniqueKey, assim tornando cada item único
+        const newUniqueKey = `${id}${Size}`;
+        // 2. Verifique se algum item já possui a uniqueKey
+        const itemExistes = prev.some((item) => item.uniqueKey == newUniqueKey);
+        // 3. Caso algum item possua a uniqueKey faça com que nada aconteça
+        // Como vamos tentar colocar a propriedade do valor das roupas aqui, vamos ter que mudar do não retornar nada para incrementar o valor da propriedade
+        if (itemExistes) {
+          return prev.map((item) =>
+            // Qual é a diferença entre fazer a verificação usando a uniqueKey e o id
+            item.uniqueKey === newUniqueKey
+              ? { ...item, quantityValue: item.quantityValue + 1 } // Atualiza o valor do quantity
+              : item
+          );
+        }
+        // 4. Caso a uniqueKey não exista crie um novo objeto na array estado, adicionando todas as propriedade que usaremos mais adiante
+        else {
+          // A propriedade uniqueKey serve para tornar cada objeto único mesmo no caso de itens terem o mesmo id, mas tamanhos diferentes
+          return [
+            ...prev,
+            { id: id, size: Size, uniqueKey: newUniqueKey, quantityValue: 1 },
+          ];
+        }
+      });
     }
-    // Fazer a solicitação de update do valor de quantity no caso do usuário querer adicionar o mesmo elemento ao banco de dados
-    // Antes de adicionar item ao carrinho do usuário não logado é necessário fazer algumas verificações, como só adicionar itens iguais caso o tamanho seja diferente do já adicionado e caso o item já tenha sido adicionado e tentamos adicionar o do mesmo tamanho que apenas incrementemos a quantidade em 1.
-    // Para lidar com o adicionamento de itens de tamanhos iguais usaremos uma propriedade chamada de uniqueKey que junta tanto o id da roupa como seu tamanho para gerar uma propriedade com valor único
-    setItemID((prev) => {
-      // 1. Vamos criar a variável que vai recebe a uniqueKey que será usada para dar valor único para a propriedade uniqueKey, assim tornando cada item único
-      const newUniqueKey = `${id}${Size}`;
-      // 2. Verifique se algum item já possui a uniqueKey
-      const itemExistes = prev.some(
-        (item) => item.uniqueKey == newUniqueKey
-      );
-      // 3. Caso algum item possua a uniqueKey faça com que nada aconteça
-      // Como vamos tentar colocar a propriedade do valor das roupas aqui, vamos ter que mudar do não retornar nada para incrementar o valor da propriedade 
-      if (itemExistes) {
-
-        return prev.map((item) =>
-          // Qual é a diferença entre fazer a verificação usando a uniqueKey e o id 
-          item.uniqueKey === newUniqueKey
-            ? { ...item, quantityValue: item.quantityValue + 1 } // Atualiza o valor do quantity
-            : item
-        );
-      }
-      // 4. Caso a uniqueKey não exista crie um novo objeto na array estado, adicionando todas as propriedade que usaremos mais adiante
-      else {
-        // A propriedade uniqueKey serve para tornar cada objeto único mesmo no caso de itens terem o mesmo id, mas tamanhos diferentes
-        return [...prev, { id: id, size: Size, uniqueKey: newUniqueKey, quantityValue: 1 }];
-      }
-    });
-
-    // Para fazer que o valor da quantidade de uma certa roupa funcione precisei usar um contexto, nesse código adicionamos 1 ao valor da quantidade sempre que o mesmo item for adicionado ao carrinho e caso ele ainda não tenha sido adicionado, o adicionamos a array que lida com a quantidade, também fazemos com que o valor inicial da quantidade seja 1 para fazer sentido.
-
-
-    // Vamos tentar adicionar o uniqueKey no momento que criamos o objeto no estado ItemID
-    // setClothes((prevClothes) => {
-    //   const newUniqueKey = `${id}${Size}`;
-
-    //   const itemExistes = prevClothes.some((item) => item.uniquekey === newUniqueKey)
-    //   if(itemExistes) return prevClothes
-    //   else {
-    //     return prevClothes.map((item) =>
-    //       `${item.id}${s}` === newUniqueKey 
-    //         ? { ...item, uniquekey: newUniqueKey, ClothSize: Size}
-    //         : item
-    //     );
-    //   }
-    // });
-
 
     setQuantities((prevQuantities) => {
       // Primeiro crie a nova uniqueKey
-      const newUniqueKey = `${id}${Size}`
+      const newUniqueKey = `${id}${Size}`;
       // 1.Verificamos se o objeto que representa o item existe no contexto
       // Verifique se o id do item já existe no contexto
       const itemExists = prevQuantities.some(
@@ -125,13 +107,13 @@ export const Clothes = ({
       if (itemExists) {
         //Se o item existir atualize o seu valor do quantityValue
         return prevQuantities.map((item) =>
-          // Qual é a diferença entre fazer a verificação usando a uniqueKey e o id 
+          // Qual é a diferença entre fazer a verificação usando a uniqueKey e o id
           item.id === id
             ? { ...item, quantityValue: item.quantityValue + 1 } // Atualiza o valor do quantity
             : item
         );
       } else {
-        console.log("a propriedade foi adicionada com sucesso")
+        console.log("a propriedade foi adicionada com sucesso");
 
         // 3. Caso não exista crie um novo para o item que será adicionado ao carrinho
         // Adicione um novo item ao estado e faça com que o valor inicial da quantidade seja 1
@@ -146,32 +128,6 @@ export const Clothes = ({
   const SizeHandle = (e: string) => {
     // Usamos a função do estado Size para adicionar o tamanho escolhido ao estado
     setSize(e);
-    // Aqui criamos a nova propriedade ClothSize e colocamos ela em todos os elementos que tiverem o id igual ao id do elemento que clicou o botão para adicionar ao carrinho. ClothSize será o valor do tamanho da roupa, ele precisa ser adicionado dinamicamente, pois não será proprio de cada objeto
-    // Primeiro pegamos do contexto a array de objetos que constitui os dados das roupas, depois usamos o método map para criar uma nova propriedade em cada objeto caso o id da roupa adicionada ao carrinho seja igual ao id do objeto, se não for apenas retornamos o objeto e nada acontece
-    // Tenho que levar em conta que a única coisa que estamos fazendo é adicionar a propriedade ClothSize em todos os objetos e caso a propriedade
-    // O problema desse código é que ele mudara o valor da propriedade size de todos os itens com o mesmo id, mesmo os que já estão no carrinho, isso acontece porque eu uso a propriedade ClothSize para mostrar o tamanho da roupa.
-
-    // Vamos usar apenas a uniquekey para adicionar o tamanho das roupas, faremos isso adicionando a propriedade uniquekey aos dados que estão salvos localmente
-    // O objetivo dessa função é apenas adicionar o tamanho da roupa usando o uniqueKey
-    // setClothes((prevClothes) => {
-    //   // 1. Verifique se algum item com o mesmo id e size existe na array
-    //   // Não faz sentido perguntar se a uniquekey existe em algum item, já que essa propriedade não é adicionada aos itens da array clothes, ele apenas existe na array ItemID
-    //   // O problema que estamos encontrando é que não estou sendo capaz de usar as propriedades que ainda vão ser adicionadas ao contexto para fazer verificações
-
-    //   const itemExists = prevClothes.some((item) => item.id === id);
-    //   console.log(itemExists);
-    //   // 2.Caso ele exista nada acontece
-    //   if (itemExists) {
-    //     return prevClothes;
-    //   }
-    //   // 3.Caso o item não exista
-    //   return prevClothes.map((item) =>
-    //     item.id === id && item.ClothSize === Size
-    //       ? { ...item, ClothSize: Size || "M"}
-    //       : item
-    //   );
-    // });
-    // Como eu faria uma verificação onde mesmo que o objeto tenha o mesmo id, o valor do ClothSize não seria mudado
   };
   useEffect(() => {
     console.log("Estado atualizado:", ItemID); // Log para inspecionar o estado após a atualização

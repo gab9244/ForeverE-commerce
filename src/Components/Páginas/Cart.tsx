@@ -93,14 +93,13 @@ export const Cart = () => {
             0
           )
         );
-      } else if ( IntheCart.length < 1 && ItemID.length < 1) {
+      } else if ( IntheCart.length  < 1 && ItemID.length < 1) {
          setTotal(0)
          setPlusFee(0)
       }
     };
-    console.log(total)
     onSum();
-  }, [Items, userInfo, inputValue]);
+  }, [Items, userInfo]);
   // Vamos usar o useEffect para executar a função que faz a soma sempre que houver uma mudança em alguns estados que estão relacionados ao valor das roupas
   // Vamos criar uma função que mostra a soma para o usuário logado e não logado
   useEffect(() => {
@@ -239,9 +238,8 @@ export const Cart = () => {
           setItems((prevItems) =>
             prevItems.filter((item) => `${item.id}${item.size}` !== uniqueKey)
           );
-
-           ShowAllItens();
-          console.log("Items após ShowAllItens:", Items);
+          await ShowAllItens();
+          console.log("Items após ShowAllItens:", Items.length);
           // Atualize os itens após excluir
           // Com este console eu descobrir que estou removendo itens da lista de dados ao invés de remove-los da lista que é usada para fazer a comparação com o contexto de dados
         }
