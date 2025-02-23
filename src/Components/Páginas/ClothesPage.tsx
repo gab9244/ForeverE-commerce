@@ -3,7 +3,7 @@ import { ClothesLinks } from "../Util/CCollection";
 import ClothesData from "../Util/Info.json";
 import { SizeBtns } from "../Util/SizeBtns";
 import { StartsFactory } from "../Util/StartsFactory";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
 interface Clothe {
   imgSrc: string;
@@ -22,15 +22,17 @@ export const Clothes = ({
   ClothePrice,
   id,
 }: Clothe) => {
+  // Estado que armazena o tamanho da roupa
   const [Size, setSize] = useState("");
-  const { ItemID, setItemID } = useContext(UserContext);
-  // const {setClothes } = useContext(UserContext);
+  // Este contexto que representa e armazena todos os dados do carrinho do usuário não logado
+  const { setItemID } = useContext(UserContext);
+  // Este contexto armazenas as informações do usuário logado, como senha e nome
   const { userInfo } = useContext(UserContext);
+  // Este contexto representa a quantidade de uma determinada roupa do usuário não logado
   const { setQuantities } = useContext(UserContext);
 
-  // Criar estado inicial com a nova propriedade
-
   const AddingItem = async () => {
+    // newUniqueKey é a uniqueKey de uma determinada roupa
     const newUniqueKey = `${id}${Size}`;
     // Primeiro perguntamos se o usuário escolheu um tamanho de roupa, caso ele tenha feito isso o código continua
     if (Size === "") {
@@ -64,8 +66,8 @@ export const Clothes = ({
         })
         .catch((error) => alert(`Falha ao criar item: ${error.message}`));
       // Se o dono do item for o mesmo que o usuário logado, adicionaremos a propriedade owner e passaremos como valor o username que estiver logado
-      return
-    } else{
+      return;
+    } else {
       // Fazer a solicitação de update do valor de quantity no caso do usuário querer adicionar o mesmo elemento ao banco de dados
       // Antes de adicionar item ao carrinho do usuário não logado é necessário fazer algumas verificações, como só adicionar itens iguais caso o tamanho seja diferente do já adicionado e caso o item já tenha sido adicionado e tentamos adicionar o do mesmo tamanho que apenas incrementemos a quantidade em 1.
       // Para lidar com o adicionamento de itens de tamanhos iguais usaremos uma propriedade chamada de uniqueKey que junta tanto o id da roupa como seu tamanho para gerar uma propriedade com valor único
@@ -129,9 +131,7 @@ export const Clothes = ({
     // Usamos a função do estado Size para adicionar o tamanho escolhido ao estado
     setSize(e);
   };
-  useEffect(() => {
-    console.log("Estado atualizado:", ItemID); // Log para inspecionar o estado após a atualização
-  }, [ItemID]);
+
   return (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 px-7 ">
       <div className="md:grid grid-cols-2  ">
@@ -173,12 +173,14 @@ export const Clothes = ({
           <div className="border-b-2 border-gray-400 grid gap-5 ">
             <p className=" font-medium">Select size</p>
             <div className="flex gap-4">
+          {/* Estes são os botões para selecionar o tamanho da roupa */}
               <SizeBtns text="S" onClick={() => SizeHandle("S")} />
               <SizeBtns text="M" onClick={() => SizeHandle("M")} />
               <SizeBtns text="L" onClick={() => SizeHandle("L")} />
               <SizeBtns text="XL" onClick={() => SizeHandle("XL")} />
               <SizeBtns text="XXL" onClick={() => SizeHandle("XXL")} />
             </div>
+            {/* Este é o botão que adiciona as roupas ao carrinho */}
             <button
               className="bg-black text-white w-1/2 h-10  text-sm font-medium active:bg-gray-600 mb-5"
               onClick={AddingItem}

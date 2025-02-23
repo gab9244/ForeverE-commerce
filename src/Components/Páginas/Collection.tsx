@@ -12,7 +12,7 @@ interface Clothe {
   imgSrc: string;
   altText: string;
   ClotheName: string;
-  ClothePrice: string;
+  ClothePrice: number;
   Categorie: string;
   id: number;
 }
@@ -20,7 +20,6 @@ const CollectionData: Clothe[] = ClothesData.CollectionData;
 // Os filtros escolhidos devem influenciar as imagens mostradas
 export const Collection = () => {
   const [ShowM, setShowM] = useState(false);
-  // const [Filters, setFilters] = useState<string[]>([]);
   const [Men, setMen] = useState(false);
   const [Women, setWomen] = useState(false);
   const [Kids, setKids] = useState(false);

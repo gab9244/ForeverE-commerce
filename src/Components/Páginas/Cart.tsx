@@ -24,7 +24,7 @@ export const Cart = () => {
 
   // Estado que contem o valor do total das roupas mais o valor da entrega
   const [PlusFee, setPlusFee] = useState<number>(0);
-  // Pega todos os itens salvos no banco de dados
+  // Solicitação GET que Pega todos os itens salvos no banco de dados
   const ShowAllItens = async () => {
     await fetch(`http://localhost:3000/getAllItems`, {
       method: "GET",
@@ -38,64 +38,63 @@ export const Cart = () => {
         return response.json();
       })
       .then((data) => {
-        // Não será possivel usar o owner como valor de comparação, então peque os ids que
-        // Arrume uma maneira de apenas adicionar ids de itens que possuírem  um owner em sí
-        // faça com que apenas os ids de itens que possuirem um username igual ao da propriedade owner seja adicionados ao estado
-        // ids recebe apenas os dados salvos pelos usuário logado no momento
-        // Primeiro usamos o método filter nos dados que pegamos do mongodb, para filtrar apenas os itens salvos pelo usuário, comparamos a propriedade owner dos itens salvos no mongodb com o nome do usuário logado: .filter((item: { owner: string }) => item.owner === userInfo.username)
-
-        // Em seguida usamos o método map para criar uma nova array que é constituída pelos dados dos itens salvos pelo usuário
-        // Por fim passamos essa array de objetos que criamos para o estado Items, ele é usado para comparar o id dos itens salvos localmente com os salvos no banco de dados para que possamos renderizar apenas os itens salvos pelo usuário
-        const ids = data
-          .filter((item: { owner: string }) => item.owner === userInfo.username)
-          .map(
-            (item: {
-              id: number;
-              owner: string;
-              size: string;
-              quantity: number;
-              uniqueKey: string;
-            }) => ({
-              id: item.id,
-              owner: item.owner,
-              size: item.size || "M",
-              quantity: item.quantity,
-              uniqueKey: item.uniqueKey,
-            })
-          );
-        setItems(ids); // Atualiza o estado com os IDs
+        // Caso a solicitação seja um sucesso e consigamos pegar todos os itens do usuário logado tornaremos essa array de dados em uma array que representa o carrinho do usuário logado e armazenaremos essa nova array no estado Items que representa o carrinho do usuário logado
+        setItems(
+          data
+            .filter(
+              (item: { owner: string }) => item.owner === userInfo.username
+            )
+            .map(
+              (item: {
+                id: number;
+                owner: string;
+                size: string;
+                quantity: number;
+                uniqueKey: string;
+              }) => ({
+                id: item.id,
+                owner: item.owner,
+                size: item.size || "M",
+                quantity: item.quantity,
+                uniqueKey: item.uniqueKey,
+              })
+            )
+        );
       })
       .catch((error) => alert(`Falha ao criar item: ${error.message}`));
   };
 
-  // Este useEffect é usado para pagar o novo valor e quantity assim que algum input tiver seu valor alterado
+  // Este useEffect é usado para atualizar o carrinho do usuário logado sempre que o valor da quantidade de uma roupa for alterada, com isso conseguimos pegar o valor atualizado da quantidade de uma roupa.
   useEffect(() => {
     ShowAllItens();
   }, [inputValue]);
 
-  // Alguns problemas apareceram, os itens já salvos não tem seu valor considerado quando são carregados do banco de dados, a mudança da quantidade não está afetando o valor total,
+  // Este useEffect serve para executar a função que faz a soma do carrinho do usuário logado
   useEffect(() => {
     const onSum = () => {
-      // Primeiro criamos uma nova array composta por itens
+      // Primeiro criamos uma nova array de objetos composta pela quantidade e valor de cada roupa salva no carrinho
       const IntheCart = Items.map((onItens) => {
-        const clothePrice = clothes.find(
-          (item) => item.id === onItens.id
-        )?.ClothePrice ?? 0;
+        const clothePrice =
+          clothes.find((item) => item.id === onItens.id)?.ClothePrice ?? 0;
         return {
           price: clothePrice ?? 0,
           quantity: onItens.quantity,
         };
       });
+      // Em seguida vamos perguntar se há algum item no carrinho, caso acha executaremos a soma dos valores das roupas e armazenaremos o valor no estado que representa o valor total de um carrinho
       if (IntheCart.length > 0) {
         setTotal(
+          // Usanos o método reduce para fazer a soma, onde somamos o valor total mais o produto do valor de cada rouppa vezes a sua quantidade
           IntheCart.reduce(
             (total, itens) => total + itens.price * itens.quantity,
             0
           )
         );
-      } else if ( IntheCart.length  < 1 && ItemID.length < 1) {
-         setTotal(0)
-         setPlusFee(0)
+      }
+      // Caso o carrinho esteja vazio limparemos o valor dos estado quq
+      else if (IntheCart.length < 1 && ItemID.length < 1) {
+        setTotal(0);
+        setPlusFee(0);
       }
     };
     onSum();
@@ -125,16 +124,15 @@ export const Cart = () => {
             0
           )
         );
+      } else if (inTheCart.length === 0 && Items.length < 1) {
+        setTotal(0);
+        setPlusFee(0);
       }
-      else if ( inTheCart.length === 0 && Items.length < 1) {
-        setTotal(0)
-        setPlusFee(0)
-     }
     };
     offSum();
   }, [ItemID, userInfo]); // Adiciona dependências relevantes
 
-  // Aqui usamos o useEffect para atualizar o valor total mais os 10 da entrega, para que o valor seja atualizado corretamente colocamos o estado total como segundo parâmetro do hook
+  // Aqui usamos o useEffect para atualizar o valor total mais os 10 da entrega, para que o valor seja atualizado corretamente colocamos o estado total como segundo parâmetro do hook, usamos outro estado ao invés de simplesmente adicionar 10 ao estado total, pois caso nenhum item esteja em ambos os carrinho e apenas adicionamos 10 ao estado total, o valor total final será 10 ao invés de 0.
   useEffect(() => {
     if (total) {
       setPlusFee(() => total + 10);
@@ -149,7 +147,7 @@ export const Cart = () => {
       console.error("Erro ao salvar no localStorage:", error);
     }
   }, [quantities]);
-  // Este userEffect em como proposito limpar o cacher do localStorage sempre que a página for fechada ou recarregada, não re-renderizada
+  // Este userEffect tem como proposito limpar o cacher do localStorage sempre que a página for fechada ou recarregada, não re-renderizada
 
   useEffect(() => {
     localStorage.clear();
@@ -170,6 +168,7 @@ export const Cart = () => {
     }
     ShowAllItens();
   };
+  // Esta é a função que atualiza o valor da quantidade de uma determinada roupa
 
   const updateQuantityLocally = (
     id: number,
@@ -177,31 +176,10 @@ export const Cart = () => {
     size: string | undefined,
     newUniqueKey: string | undefined
   ) => {
-    // Eu quero criar um estado array de objetos, onde cada objeto possui duas propriedade id e quantityValue, eu quero ser capaz de mudar o valor de um desse objetos sempre que a função updateQuantityLocally for executada, para identificar o objeto que eu quero altera vou usar a propriedade id para verificar se o objeto que eu quero altera bate com o id do input que esta mudando seu valor, já que a função seria executado sempre que algum input fosse alterado. Também quero usar a propriedade quantityValue para mostrar o valor de cada objeto/ do input
-    // setQuantities((prevQuantities) => {
-    //   // A função deve achar o item que deve a propriedade alterada e atualiza-la
-    //   // const newUniqueKey = `${id}${size}`
-    //   // Verifique se o id do item já existe no estado
-    //   // O problema está nessa linha, por algum motivo não estou conseguindo acessar a propriedade uniqueKey
-    //   const itemExists = prevQuantities.find((item) =>`3M` === newUniqueKey);
-    //   console.log(newUniqueKey);
-    //   if (itemExists) {
-    //     console.log("working")
-    //     //Se o item existir atualize o seu valor do quantityValue
-    //     return prevQuantities.map((item) =>
-    //       item.id === id
-    //         ? { ...item, quantityValue: inputValue } // Atualiza o valor do quantity
-    //         : item
-    //     );
-    //   }
-    //   return prevQuantities
-    //   // else {
-    //   //   // Adicione um novo item ao estado não faz sentido com o código, já que o único objeto da função é atualizar a propriedade do item alterado
-    //   //   return [...prevQuantities, { id, quantityValue: inputValue }];
-    //   // }
-    // });
     setItemID((prev) => {
+      // Primeiro busque pela roupa
       const itemExistes = prev.find((item) => item.uniqueKey === newUniqueKey);
+      // Caso ela exista atualize o estado adicionando o novo valor da quantidade do item ao seu determinado elemento
       if (itemExistes) {
         return prev.map((item) =>
           item.uniqueKey === newUniqueKey
@@ -215,7 +193,7 @@ export const Cart = () => {
   };
 
   // A função DeleteItem é usada para deletar uma das roupas clicadas
-  // Ela recebe o id da roupa como parâmetro e faz uma simples solicitação de delete, onde passa o id da roupa na url, dessa forma podemos pegar o id da roupa pelos params no backend da solicitação, e com isso podemos deletar o item baseado no sei id, por fim caso consigamos deletar a roupa, atualizamos o estado da lista removendo a roupa deletada
+  // Ela recebe o uniqueKey da roupa como parâmetro e faz uma simples solicitação de delete, onde passa o uniqueKey da roupa na url, dessa forma podemos pegar o uniqueKey da roupa pelos params no backend da solicitação, e com isso podemos deletar o item baseado no seu uniqueKey, por fim caso consigamos deletar a roupa, atualizamos o estado da lista removendo a roupa deletada
   const DeleteItemOn = async (
     ItemId: number,
     uniqueKey: string | undefined,
@@ -248,19 +226,14 @@ export const Cart = () => {
       }
     }
   };
+  // Esta é a função que deleta itens do carrinho do usuário desconectado, isso é feito por filtrar o item que quer ser deletado da array que representa o carrinho
   const DeleteItem = async (
     ItemId: number,
     uniqueKey: string | undefined,
     Size: string | undefined
   ) => {
-    // Precisamos deletar o objeto na chave que guardamos os objetos, para que não aconteça um erro, vamos achar o objeto dentro da chave que é correspondente ao item que será deletado da seguinte maneira:
-    // 1. Recuperar a array atual do localStorage
-    // 2. Filtrar a array para excluir o objeto com o id correspondente
-    // 3. Atualizar o estado no React e sobrescrever a array no localStorage
     if (!userInfo.username) {
-      // Para deletar itens vou usar a uniqueKey ao invés de id e o tamanho da roupa
       setItemID((prev) => {
-        // O problema não está nas propriedades do ItemID
         return prev.filter((item) => item.uniqueKey !== uniqueKey);
       });
 
@@ -293,8 +266,8 @@ export const Cart = () => {
         </div>
 
         <div>
-          {/* Para mostrar apenas as roupas dos usuários logados usamos o estado Items(que possui todos os dados dos itens salvos pelo usuário no banco de dado), perguntamos se algum objeto dentro do contexto Items possui id igual ao dos objetos locais e também perguntamos se o usuário que salvou a roupa é o mesmo que esta logado, se sim renderizamos os itens salvos pelo user no mongodb */}
 
+          {/* Aqui utilizamos o operador tenario para verificar se o usuário está logado, caso esteja carregaremos o carrinho do usuário logado, caso não esteja carregaremos o carrinho do usuário desconectado   */}
           {userInfo.username ? (
             <SavedItemComponent
               updateQuantity={updateQuantity}

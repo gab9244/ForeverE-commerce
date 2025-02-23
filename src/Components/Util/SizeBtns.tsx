@@ -7,3 +7,4 @@ export const SizeBtns = ({text, onClick}:SizeBtnsProps) => {
     <button className="bg-gray-200  w-12 h-10 focus:border-2 border-red-500" onClick={onClick}>{text}</button>
   )
 }
+// Este componente server para criar varias funções com evento onclick sem deixar o código muito complicado

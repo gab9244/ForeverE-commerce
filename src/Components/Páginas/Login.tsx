@@ -1,28 +1,17 @@
 import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
-// import ClothesData from "../Util/Info.json";
 
-// interface Clothe {
-//   imgSrc: string;
-//   altText: string;
-//   ClotheName: string;
-//   ClothePrice: string;
-//   Categorie: string;
-//   id: number;
-// }
-// const CollectionData: Clothe[] = ClothesData.CollectionData;
 export const Login = () => {
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-
   const { setUserInfo } = useContext(UserContext);
-  // const { userInfo, setClothes } = useContext(UserContext);
-
   const login = async (ev: { preventDefault: () => void }) => {
+    // Usamos preventDefault no evento de submit para fazer com que o formulário não seja enviado e com isso não recarregue a página
     ev.preventDefault();
-    //Aqui estamos fazendo uma solicitação fetch POST, onde temos como objetivo mandar o username e password para o nosso backend e lá a solicitação pega os dados do body que mandamos e os usa para buscar por um usuário usando o username para fazer a busca , então usamos uma solicitão post não para mandar dados para o banco de dados, mas sim para podemos mandar ao nosso backend os dados, já que solicitações do tipo Post podem mandar um body e é nesse body que mandamos os dados: req.body
+    //Aqui estamos fazendo uma solicitação fetch POST, onde temos como objetivo mandar o username e password para o nosso backend e lá  solicitação pega os dados do body que mandamos e os usa para buscar por um usuário usando o username para fazer a busca , então usamos uma solicitação post não para mandar dados para o banco de dados, mas sim para mandar ao nosso backend os dados, já que solicitações do tipo Post podem mandar um body e é nesse body que mandamos os dados: req.body
     await fetch(`http://localhost:3000/LogIng`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
@@ -31,14 +20,11 @@ export const Login = () => {
       credentials: "include",
     })
       .then((res) => {
+        // Caso a solicitação seja um sucesso atualizaremos o estado que redireciona o usuário para a página principal do projeto e também atualizamos o contexto que armazena as informações do usuário logado adicionando o username ao contexto 
         if (res.ok) {
           setRedirect(true);
           setUserInfo((prev) => ({ ...prev, username }));
           return res.json();
-          // Manda para o home
-          // Adicionao username ao contexto
-
-          // console.log(userInfo)
         } else {
           alert(`Wrong credentials`);
         }
@@ -47,6 +33,7 @@ export const Login = () => {
         alert(`Wrong credentials, error ${error} happened `);
       });
   };
+  // Caso o valor do estado redirect seja true mandamos o usuário para a home do projeto
   if (redirect == true) {
     return <Navigate to={"/"} />;
   }

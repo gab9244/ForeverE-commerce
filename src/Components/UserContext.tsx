@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// É neste componente onde definimos os contexto do projeto
 //O context do React nada mais é do que uma maneira de passar dados para todos os componentes que forem embrulhados pelo UserContextProvider, nesse caso queremos passar as state variables userInfo e setUserInfo
 import { createContext, useState, Dispatch, SetStateAction, ReactNode } from 'react';
 import ClothesData from "./Util/Info.json";

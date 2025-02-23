@@ -60,7 +60,7 @@ export const SavedItemComponent = ({
                   // Para fazer com que o usuário não seja capaz de adicionar valores negativos ao input usaremos o evento onKeyDown
                   // Esse evento é usado quando queremos lidar com a tecla física que o usuário clicou, nesse caso verificamos se o usuário apertou a tecla que representa negativo e também a tecla e já que em alguns casos ela pode ser usada
                   onKeyDown={(event) => {
-                    // Prevent the user from typing negative signs
+                    // Usando este argumento if prevenimos o uso de símbolos negativos no input
                     if (event.key === "-" || event.key === "e") {
                       event.preventDefault();
                     }

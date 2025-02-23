@@ -8,3 +8,5 @@ export const StartsFactory = () => {
           />
   )
 }
+
+// Outro componente reutilizável 
