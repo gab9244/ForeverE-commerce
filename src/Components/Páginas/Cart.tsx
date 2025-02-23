@@ -171,9 +171,7 @@ export const Cart = () => {
   // Esta é a função que atualiza o valor da quantidade de uma determinada roupa
 
   const updateQuantityLocally = (
-    id: number,
     inputValue: number,
-    size: string | undefined,
     newUniqueKey: string | undefined
   ) => {
     setItemID((prev) => {

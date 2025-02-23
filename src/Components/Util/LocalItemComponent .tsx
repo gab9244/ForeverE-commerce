@@ -5,7 +5,7 @@ type LocalItemComponentPromps = {
 
 
   DeleteItem: (id: number, uniqueKey: string | undefined, size?: string) => void;
-  updateQuantityLocally: (id: number, inputValue: number, size?:string, newUniqueKey?:string) => void;
+  updateQuantityLocally: ( inputValue: number, newUniqueKey?:string) => void;
 };
 
 export const LocalItemComponent = ({
@@ -43,7 +43,7 @@ export const LocalItemComponent = ({
               }
               onChange={(inputValue) =>{
                
-                updateQuantityLocally(data.id, Number(inputValue.target.value), data.size, data.uniqueKey)}
+                updateQuantityLocally( Number(inputValue.target.value),  data.uniqueKey)}
               }
               // Para fazer com que o usuário não seja capaz de adicionar valores negativos ao input usaremos o evento onKeyDown
               // Esse evento é usado quando queremos lidar com a tecla física que o usuário clicou, nesse caso verificamos se o usuário apertou a tecla que representa negativo e também a tecla e já que em alguns casos ela pode ser usada 
