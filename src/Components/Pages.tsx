@@ -16,7 +16,7 @@ interface Cloth {
   imgSrc: string;
   altText: string;
   ClotheName: string;
-  ClothePrice: string;
+  ClothePrice: number;
   Categorie: string;
   id: number;
 }
