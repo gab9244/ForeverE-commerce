@@ -26,6 +26,7 @@ export const Cart = () => {
   const [PlusFee, setPlusFee] = useState<number>(0);
   // Solicitação GET que Pega todos os itens salvos no banco de dados
   const ShowAllItens = async () => {
+    if(!userInfo.username) return
     await fetch(`http://localhost:3000/getAllItems`, {
       method: "GET",
       credentials: "include",
