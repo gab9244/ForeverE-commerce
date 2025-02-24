@@ -13,7 +13,7 @@ export const Footer = () => {
     },
   ];
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-3  text-center py-16  px-6 mt-8 ">
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 py-16 md:grid-cols-3  px-6 mt-8 ">
         <div className="">
           <Link to={"/"}>
               <img src="\frontend_assets\logo.png" alt="Forever logo" className="Logo w-36"/>

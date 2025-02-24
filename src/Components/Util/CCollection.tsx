@@ -19,7 +19,6 @@ export const ClothesLinks = ({
       <CustomLink imgSrc={imgSrc} altText={altText} />
       <p className="text-xs">{ClotheName}</p>
       <p className="text-xs font-medium">${ClothePrice}</p>
-      <img src="" alt="" />
     </Link>
   );
 };

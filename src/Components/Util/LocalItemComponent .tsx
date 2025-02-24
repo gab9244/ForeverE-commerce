@@ -62,7 +62,7 @@ export const LocalItemComponent = ({
               onClick={() => DeleteItem(data.id, data.uniqueKey, data.size)}
             >
               <img
-                src="public/frontend_assets/bin_icon.png"
+                src="frontend_assets/bin_icon.png"
                 alt="A trash icon"
               />
             </button>
