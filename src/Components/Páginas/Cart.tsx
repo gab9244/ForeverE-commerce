@@ -33,7 +33,8 @@ export const Cart = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Erro na solicitação: ${response.statusText}`);
+          // throw new Error(`Erro na solicitação: ${response.statusText}`);
+          console.log("Erro na solicitação porque", response.statusText)
         }
         return response.json();
       })
