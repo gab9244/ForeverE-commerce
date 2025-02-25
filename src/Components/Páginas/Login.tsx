@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
-
+const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
 export const Login = () => {
   
   const [username, setUsername] = useState("");
@@ -12,7 +12,9 @@ export const Login = () => {
     // Usamos preventDefault no evento de submit para fazer com que o formulário não seja enviado e com isso não recarregue a página
     ev.preventDefault();
     //Aqui estamos fazendo uma solicitação fetch POST, onde temos como objetivo mandar o username e password para o nosso backend e lá  solicitação pega os dados do body que mandamos e os usa para buscar por um usuário usando o username para fazer a busca , então usamos uma solicitação post não para mandar dados para o banco de dados, mas sim para mandar ao nosso backend os dados, já que solicitações do tipo Post podem mandar um body e é nesse body que mandamos os dados: req.body
-    await fetch(`http://localhost:3000/LogIng`, {
+    // `${apiURL}/LogIng`
+    // http://localhost:3000/LogIng
+    await fetch( `${apiURL}/LogIng`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: { "Content-Type": "application/json" },

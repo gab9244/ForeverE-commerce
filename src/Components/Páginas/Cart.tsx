@@ -3,6 +3,7 @@ import { UserContext } from "../UserContext";
 import { updateLocalStorage } from "../Util/LocalStoragefunctions";
 import { SavedItemComponent } from "../Util/SavedItemComponent";
 import { LocalItemComponent } from "../Util/LocalItemComponent ";
+const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
 
 export const Cart = () => {
   const [Items, setItems] = useState<
@@ -27,7 +28,7 @@ export const Cart = () => {
   // Solicitação GET que Pega todos os itens salvos no banco de dados
   const ShowAllItens = async () => {
     if(!userInfo.username) return
-    await fetch(`http://localhost:3000/getAllItems`, {
+    await fetch(`${apiURL}/getAllItems`, {
       method: "GET",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -159,7 +160,7 @@ export const Cart = () => {
   const updateQuantity = async (uniquekey: string, inputValue: string) => {
     try {
       await fetch(
-        `http://localhost:3000/updateQuantity/${uniquekey}/${inputValue}`,
+        `${apiURL}/updateQuantity/${uniquekey}/${inputValue}`,
         {
           method: "PUT",
           credentials: "include",
@@ -202,7 +203,7 @@ export const Cart = () => {
     if (userInfo.username !== "") {
       try {
         const response = await fetch(
-          `http://localhost:3000/delete/${`${ItemId}${Size}`}`,
+          `${apiURL}/delete/${`${ItemId}${Size}`}`,
           {
             method: "DELETE",
             credentials: "include",

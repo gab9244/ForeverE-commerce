@@ -4,6 +4,7 @@ export const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
 
   const register = async (ev: { preventDefault: () => void }) => {
     //Usamos preventDefault para previnir que o formulario seja realmente enviado e com isso recarreque a página
@@ -15,7 +16,7 @@ export const SignUp = () => {
     // body, que contém o corpo da solicitação, nesse caso estamos enviando o username e password, pois queremos criar um novo usuário.
     // headers, é a propriedade que especifica o tipo dos dados que estamos enviando, fazemos isso para não haver problemas com o cors.
 
-    await fetch(`http://localhost:3000/Registration`, {
+    await fetch(`${apiURL}/Registration`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
       credentials: "include",

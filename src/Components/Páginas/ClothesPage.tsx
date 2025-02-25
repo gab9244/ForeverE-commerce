@@ -5,6 +5,8 @@ import { SizeBtns } from "../Util/SizeBtns";
 import { StartsFactory } from "../Util/StartsFactory";
 import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
+const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
+
 interface Clothe {
   imgSrc: string;
   altText: string;
@@ -41,7 +43,7 @@ export const Clothes = ({
     //Em seguida perguntamos se ele está logado se estiver o código dentro do bloco if é executado
     if (userInfo.username) {
       // Solicitação que adiciona o uniqueKey e outras informações do item ao banco de dados
-      await fetch("http://localhost:3000/addItem", {
+      await fetch(`${apiURL}/addItem`, {
         method: "POST",
         // No corpo da solicitação colocamos o id do item, dono, tamanho, quantidade e a uniqueKey do item
         body: JSON.stringify({
