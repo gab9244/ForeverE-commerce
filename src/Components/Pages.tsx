@@ -11,7 +11,7 @@ import { Login } from "./Páginas/Login";
 import { SignUp } from "./Páginas/SignUp";
 import { Cart } from "./Páginas/Cart";
 import { UserContextProvider } from "./UserContext"
-
+import ScrollToTop from "./Util/ScrollTotheTop";
 interface Cloth {
   imgSrc: string;
   altText: string;
@@ -26,6 +26,7 @@ export const Pages = () => {
   return (
     <BrowserRouter>
       <UserContextProvider>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/" element={<Layout />}>
