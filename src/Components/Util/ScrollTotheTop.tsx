@@ -23,4 +23,4 @@ export default ScrollToTop;
 
 // Window.scrollTo seria a propriedade que representa a barra de scroll, então mudar seu valor para 0,0 significa mudar o valor da barra de scroll para seu valor inicial, em outras palavras mandar para o topo da página.
 
-//Resumindo: ScrollToTop é um componente que pega o valor atual da URL e o usa no hook useEffect para executar um bloco de código que redefini o valor da barra de scroll para seu valor atual sempre a URL mudar/ mudar a página
+//Resumindo: ScrollToTop é um componente que pega o valor atual da URL e o usa no hook useEffect para executar um bloco de código que redefini o valor da barra de scroll para seu valor padrão sempre que a URL mudar (mudar a página).
