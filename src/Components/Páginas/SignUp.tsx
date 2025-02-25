@@ -4,7 +4,8 @@ export const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
+  const apiURL = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+
 
   const register = async (ev: { preventDefault: () => void }) => {
     //Usamos preventDefault para previnir que o formulario seja realmente enviado e com isso recarreque a página

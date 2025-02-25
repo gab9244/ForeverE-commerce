@@ -3,7 +3,8 @@ import { UserContext } from "../UserContext";
 import { updateLocalStorage } from "../Util/LocalStoragefunctions";
 import { SavedItemComponent } from "../Util/SavedItemComponent";
 import { LocalItemComponent } from "../Util/LocalItemComponent ";
-const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
+const apiURL = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+
 
 export const Cart = () => {
   const [Items, setItems] = useState<

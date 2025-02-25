@@ -5,7 +5,7 @@ import { SizeBtns } from "../Util/SizeBtns";
 import { StartsFactory } from "../Util/StartsFactory";
 import { useContext, useState } from "react";
 import { UserContext } from "../UserContext";
-const apiURL = import.meta.env.VITE_REACT_APP_BASEURL
+const apiURL = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
 
 interface Clothe {
   imgSrc: string;
