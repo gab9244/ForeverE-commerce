@@ -3,8 +3,7 @@ import { UserContext } from "../UserContext";
 import { updateLocalStorage } from "../Util/LocalStoragefunctions";
 import { SavedItemComponent } from "../Util/SavedItemComponent";
 import { LocalItemComponent } from "../Util/LocalItemComponent ";
-const apiURL = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-
+const apiURL = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
 
 export const Cart = () => {
   const [Items, setItems] = useState<
@@ -28,7 +27,7 @@ export const Cart = () => {
   const [PlusFee, setPlusFee] = useState<number>(0);
   // Solicitação GET que Pega todos os itens salvos no banco de dados
   const ShowAllItens = async () => {
-    if(!userInfo.username) return
+    if (!userInfo.username) return;
     await fetch(`${apiURL}/getAllItems`, {
       method: "GET",
       credentials: "include",
@@ -37,7 +36,7 @@ export const Cart = () => {
       .then((response) => {
         if (!response.ok) {
           // throw new Error(`Erro na solicitação: ${response.statusText}`);
-          console.log("Erro na solicitação porque", response.statusText)
+          console.log("Erro na solicitação porque", response.statusText);
         }
         return response.json();
       })
@@ -160,13 +159,10 @@ export const Cart = () => {
   // updateQuantity é a função que usaremos para atualizar o valor do quantity, assim que o valor do input do elemento correspondente for alterado
   const updateQuantity = async (uniquekey: string, inputValue: string) => {
     try {
-      await fetch(
-        `${apiURL}/updateQuantity/${uniquekey}/${inputValue}`,
-        {
-          method: "PUT",
-          credentials: "include",
-        }
-      );
+      await fetch(`${apiURL}/updateQuantity/${uniquekey}/${inputValue}`, {
+        method: "PUT",
+        credentials: "include",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -203,13 +199,10 @@ export const Cart = () => {
   ) => {
     if (userInfo.username !== "") {
       try {
-        const response = await fetch(
-          `${apiURL}/delete/${`${ItemId}${Size}`}`,
-          {
-            method: "DELETE",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${apiURL}/delete/${`${ItemId}${Size}`}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
 
         if (response.ok) {
           // Atualize localmente o estado antes de buscar os dados atualizados
@@ -268,7 +261,6 @@ export const Cart = () => {
         </div>
 
         <div>
-
           {/* Aqui utilizamos o operador tenario para verificar se o usuário está logado, caso esteja carregaremos o carrinho do usuário logado, caso não esteja carregaremos o carrinho do usuário desconectado   */}
           {userInfo.username ? (
             <SavedItemComponent

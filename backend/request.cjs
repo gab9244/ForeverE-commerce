@@ -27,15 +27,7 @@ app.use(cookieParser());
 // allowedOrigins é uma array com todas as url permitidas a enviarem dados para o backend do projeto, precisamos fazer isso para temos uma segurança nos envios de dados
 const allowedOrigins = ["http://localhost:5173", "https://forever-e-commerce-owci.vercel.app","https://forever-e-commerce-owci.vercel.app", "https://forever-e-commerce-234x.vercel.app"];
 // Usar essa função cors faz com que apenas solicitações que tiverem sido feitas por via das urls da array allowedOrigins sejam permitidas serem feitas
-// app.use(cors({
-//     origin: function (origin, callback) {
-//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
-//   }));
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -197,22 +189,6 @@ app.delete("/delete/:uniqueKey", async (req, res) => {
   }
 });
 
-// app.get("/addItem/:id", async (req, res) => {
-//   console.log("Corpo da requisição:", req.body); // Para verificar o que está chegando
-//   const { id } = req.params;
-//   const idNumber = Number(id)
-//   try {
-//     const itemDoc = await OrderModel.find({ id: idNumber});
-//     console.log(id)
-//     res.status(200).json(itemDoc);
-//   } catch (error) {
-//     console.error("Erro ao adicionar item:", error.message);
-//     res.status(400).json({ error: "Erro ao adicionar item", details: error.message });
-//   }
-// });
-
-
-
 // port é a url do nosso backend, usamos uma variável ambiental, pois assim quando fizemos o deployment do projeto o valor dela pode ser alterado pelo lugar onde vamos fazer a hospedagem, caso esse valor não funcione ou etc, o valor de port será 4000
 const port = process.env.PORT || 3000;
 //start é uma função assíncrona que usa promise para nos conectar ao banco de dados no mongoDB
@@ -220,7 +196,8 @@ const start = async () => {
   try {
     // connectDB é uma função que importamos do componente connect que pega um url e tenta conecta-la ao banco de dados mongoDB
     // Nesse caso a url é a nossa variavel ambiental que possui como valor a url que nos conecta ao banco de dados do mongoDB
-    await connectDB(process.env.MONGO_URI);
+    // process.env.MONGO_URI
+    await connectDB('mongodb+srv://gab9244:z5zhEcw1cQBKmaCU@cluster0.fjdc8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
     //Para rodar o nosso backend usamos port que é uma variável que carrega como valor a variable ambiental PORT se ela existir caso contrario seu valor será 4000
     app.listen(port, () => {
       console.log(`Live on ${port}`);

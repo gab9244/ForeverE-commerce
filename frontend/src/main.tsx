@@ -4,6 +4,7 @@ import './Styles/index.css'
 import './Styles/App.css'
 import './Styles/Header.css'
 import { Pages } from './Components/Pages'
+import React from 'react'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

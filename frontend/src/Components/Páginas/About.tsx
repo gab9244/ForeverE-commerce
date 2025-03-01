@@ -1,3 +1,4 @@
+import React from "react";
 import { AboutRText } from "../Util/AboutRText";
 
 export const About = () => {

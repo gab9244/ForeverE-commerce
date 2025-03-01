@@ -1,3 +1,5 @@
+import React from "react";
+
 export const Contact = () => {
   return (
     <div className="grid justify-items-start gap-5 md:justify-center ">
