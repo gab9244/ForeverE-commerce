@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
-import React from "react";
 const apiURL = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
 export const Login = () => {
   

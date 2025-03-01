@@ -7,7 +7,6 @@
 import { useState } from "react";
 import { ClothesLinks } from "../Util/CCollection";
 import ClothesData from "../Util/Info.json";
-import React from "react";
 
 interface Clothe {
   imgSrc: string;
