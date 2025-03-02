@@ -25,7 +25,7 @@ app.use(express.json()); // Permite que dados json sejam acertados no corpo da r
 app.use(cookieParser());
 
 // allowedOrigins é uma array com todas as url permitidas a enviarem dados para o backend do projeto, precisamos fazer isso para temos uma segurança nos envios de dados
-const allowedOrigins = ["http://localhost:5173", "https://forever-e-commerce-owci.vercel.app","https://forever-e-commerce-owci.vercel.app", "https://forever-e-commerce-234x.vercel.app","https://forever-e-commerce-22c8.vercel.app"];
+const allowedOrigins = ["http://localhost:5173", "https://forever-e-commerce-owci.vercel.app","https://forever-e-commerce-owci.vercel.app", "https://forever-e-commerce-234x.vercel.app","https://forever-e-commerce-22c8.vercel.app", "https://forever-e-commerce-ur3q-a3r4bibd5.vercel.app"];
 // Usar essa função cors faz com que apenas solicitações que tiverem sido feitas por via das urls da array allowedOrigins sejam permitidas serem feitas
 
 app.use(
