@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 // allowedOrigins é uma array com todas as url permitidas a enviarem dados para o backend do projeto, precisamos fazer isso para temos uma segurança nos envios de dados
 const allowedOrigins = ["http://localhost:5173", "https://forever-e-commerce-owci.vercel.app","https://forever-e-commerce-owci.vercel.app", "https://forever-e-commerce-234x.vercel.app","https://forever-e-commerce-22c8.vercel.app", "https://forevere-commerce2.onrender.com"];
-// Usar essa função cors faz com que apenas solicitações que tiverem sido feitas por via das urls da array allowedOrigins sejam permitidas serem feitas
+// Usar essa função cors faz com que apenas solicitações que tiverem sido feitas por via das urls da array allowedOrigins sejam permitidas serem feita
 
 app.use(
   cors({
