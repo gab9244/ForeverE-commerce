@@ -10,7 +10,7 @@ Página de Coleção(X)
 Página sobre(X)
 Página de contato(X)
 Página de Login(X)
-Página do carrinho()
+Página do carrinho(X)
 
 Vou fazer o backend
 Ele será bem parecido com o do task-manage.
