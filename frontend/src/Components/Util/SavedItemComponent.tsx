@@ -79,7 +79,7 @@ export const SavedItemComponent = ({
                   }
                 >
                   <img
-                    src="public/frontend_assets/bin_icon.png"
+                    src="frontend_assets/bin_icon.png"
                     alt="A trash icon"
                   />
                 </button>
