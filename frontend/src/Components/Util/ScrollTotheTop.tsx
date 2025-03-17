@@ -14,7 +14,7 @@ const ScrollToTop = () => {
 export default ScrollToTop;
 
 // O componente ScrollToTop serve para fazer com que a barra de scroll sempre retorne para o topo da página quando irmos para outra página, já que por padrão componentes do React Router mantém a posição anterior do scroll
-// O hook useLocation paga a URL atual o que é util caso quisemos executar alguma ação caso a URL mude
+// O hook useLocation paga a URL atual, o que é util caso quisemos executar alguma ação caso a URL mude
 // Window representa a chanela do navegador, ela é o objeto global no ambiente do navegador, o que significa que usando esse objeto podemos acessar propriedades como: Tamanho da janela, URL atual, Armazenamento local, manipular a rolagem e etc. 
 
 // console.log(window); Exibe todas as propriedades e métodos do objeto window

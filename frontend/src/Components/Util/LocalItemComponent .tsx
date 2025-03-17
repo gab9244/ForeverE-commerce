@@ -16,12 +16,13 @@ export const LocalItemComponent = ({
   const { ItemID } = useContext(UserContext);
   const {clothes} = useContext(UserContext)
   return (
-    // Para renderizar o carrinho do usuário não logado eu usei o contexto ItemID que é uma array de objetos que representa o carrinho do usuário não logado
+    // Para renderizar o carrinho do usuário não logado eu usei o contexto ItemID que é uma array de objetos que representa o carrinho do usuário não logado, fazendo com que cada item na array se torne em uma roupa
      ItemID.map((data,index) => 
       clothes.find((item) => item.id === data.id) &&
       <div className="flex border-t-2 border-b-2 p-4 gap-3" key={index}>
       <img src={clothes.find((item) => item.id === data.id)?.imgSrc} alt="" className="w-1/4 md:w-1/12" />
       <div className="w-full">
+        {/* Para pegar informações estaticas simplesmente usei o método find na array clothes que guarda todos dados das roupas */}
         <p className="text-xs mb-5">{clothes.find((item) => item.id === data.id)?.ClotheName}</p>
         <div className="flex justify-between">
           <div className="flex gap-5">
