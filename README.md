@@ -1,7 +1,12 @@
 <!-- markdownlint-disable -->
 
 <h1>Forever Ecommerce </h1>
-<p>Este projeto tem como objetivo simular a mesma experiência encontrada em ecommerces reais.</p>
+<p>Este projeto tem como objetivo simular a mesma experiência encontrada em ecommerces.</p>
+
+<a href = "https://forevere-commerce2.onrender.com/">
+<img src= ".\frontend\public\frontend_assets\ForeverEcommecerScreenShot.png"></img>
+</a>
+
 
 <h2>O que é o projeto?</h2>
 <p>O projeto Forever ecommerce é um ecommerce, onde é possível ver um vasto catalogo de roupas, adicionar roupas ao carrinho onde caso o usuário esteja logado as roupas ficam salvas no carrinho dele, ver o valor total das roupas, mudar a quantidade de uma certa roupas e remover roupas do carrinho.</p>
