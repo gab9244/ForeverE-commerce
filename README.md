@@ -3,7 +3,7 @@
 <h1>Forever Ecommerce </h1>
 <p>Este projeto tem como objetivo simular a mesma experiência encontrada em ecommerces.</p>
 
-<a href = "https://forevere-commerce2.onrender.com/">
+<a href = "https://forevere-commerce2.onrender.com/" target = "_blank">
 <img src= ".\frontend\public\frontend_assets\ForeverEcommecerScreenShot.png"></img>
 </a>
 
